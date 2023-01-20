@@ -85,8 +85,18 @@ img {
     }
   }
 }
-
-#cover {
+#start {
+  &.off {
+    display: none;
+  }
+}
+#end {
+  display: none;
+  &.on {
+    display: flex;
+  }
+}
+.cover {
   position: fixed;
   left: 0;
   top: 0;
@@ -94,13 +104,11 @@ img {
   height: 100%;
   background-color: rgba(0, 0, 0, 0.8);
   z-index: 99;
-  display: none;
+  //display: none;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  &.on {
-    display: flex;
-  }
+  display: flex;
   h2 {
     font-size: 32px;
     color: #fff;

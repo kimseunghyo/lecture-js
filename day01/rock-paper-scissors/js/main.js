@@ -2,11 +2,13 @@ const comItems = document.querySelectorAll("#com ul li");
 const playerItem = document.querySelectorAll("#player ul li");
 const resultList = document.querySelector("#result ul");
 const blocking = document.querySelector(".blocking");
-const cover = document.querySelector("#cover");
+const btnStart = document.querySelector("#btnStart");
 const btnRestart = document.querySelector("#btnRestart");
+const coverStart = document.querySelector("#start");
+const coverEnd = document.querySelector("#end");
 const msg = document.querySelector(".msg");
 
-let idx = setInterval(random, 20);
+let idx;
 let num = 0;
 let cnt = 0;
 let winCnt = 0;
@@ -27,6 +29,15 @@ function random() {
 
   num = parseInt(Math.random() * comItems.length);
   comItems[num].style.display = "block";
+}
+
+function restart() {
+  blocking.classList.remove("on");
+  idx = setInterval(random, 20);
+}
+
+for (let i = 1; i < 3; i++) {
+  comItems[i].style.display = "none";
 }
 
 for (let i = 0; i < playerItem.length; i++) {
@@ -53,7 +64,7 @@ for (let i = 0; i < playerItem.length; i++) {
 
     if (cnt >= 3) {
       clearTimeout(idx);
-      const msg = cover.querySelector(".msg");
+      const msg = coverEnd.querySelector(".msg");
 
       if (winCnt >= 2 || (drawCnt === 2 && winCnt === 1)) {
         msg.textContent = "YOU WIN!!!";
@@ -62,13 +73,18 @@ for (let i = 0; i < playerItem.length; i++) {
       } else {
         msg.textContent = "YOU DRAW!!!";
       }
-      cover.classList.add("on");
+      coverEnd.classList.add("on");
     }
   });
 }
 
+btnStart.addEventListener("click", function () {
+  coverStart.classList.add("off");
+  idx = setInterval(random, 20);
+});
+
 btnRestart.addEventListener("click", function () {
-  cover.classList.remove("on");
+  coverEnd.classList.remove("on");
   cnt = 0;
   winCnt = 0;
   drawCnt = 0;
@@ -76,8 +92,3 @@ btnRestart.addEventListener("click", function () {
   resultList.innerHTML = "";
   restart();
 });
-
-function restart() {
-  blocking.classList.remove("on");
-  idx = setInterval(random, 20);
-}
