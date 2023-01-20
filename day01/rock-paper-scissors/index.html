@@ -7,7 +7,9 @@
     <title>ROCK-PAPER-SCISSORS</title>
     <link rel="stylesheet" href="css/reset.css" />
     <link rel="stylesheet" href="css/layout.css" />
-    <script src="./js/main.js" defer></script>
+    <!-- <script src="js/confetti.min.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/js-confetti@latest/dist/js-confetti.browser.js"></script>
+    <script src="js/main.js" defer></script>
   </head>
   <body>
     <div class="wrap">
@@ -15,7 +17,6 @@
         <span class="main">ROCK-PAPER-SCISSORS</span>
         <span class="sub">a.k.a samsepan</span>
       </h1>
-
       <div id="com">
         <ul>
           <li><img src="images/rock.svg" alt="" /></li>
@@ -31,15 +32,17 @@
         </ul>
       </div>
       <div id="result">
-        <!-- <ul>
-          <li class="win">W</li>
+        <ul>
+          <!-- <li class="win">W</li>
           <li class="lose">L</li>
-          <li class="draw">D</li>
-        </ul> -->
+          <li class="draw">D</li> -->
+        </ul>
       </div>
     </div>
+    <div class="blocking"></div>
     <div id="cover">
       <h2>To Be Continue~~</h2>
+      <p class="msg">YOU WIN</p>
       <button id="btnRestart">restart game</button>
     </div>
   </body>
