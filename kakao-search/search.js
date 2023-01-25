@@ -1,4 +1,6 @@
 // promise 이행을 하거나 거절을 하거나
+const searchTxt = document.querySelector(".search-txt");
+const btnSearch = document.querySelector(".btn-search");
 const ul = document.querySelector(".list");
 const myFetch = fetch("http://dapi.kakao.com/v2/search/image?query=김태희", {
   headers: { Authorization: "KakaoAK 7025b57e2c141dff70e233b7612ec4ee" },
