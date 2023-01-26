@@ -7,6 +7,7 @@ body {
   font-family: "Lato", "Pretendard", sans-serif;
   font-size: 16px;
   color: #fff;
+  background-color: #333;
 }
 
 li {
@@ -30,10 +31,9 @@ header {
 }
 
 .movie-list {
-  background-color: #333;
   display: flex;
   flex-wrap: wrap;
-  padding: 60px 40px;
+  padding: 60px 40px 0;
 
   > li {
     display: flex;
@@ -43,5 +43,22 @@ header {
 
   &-txt {
     padding: 0 30px;
+  }
+}
+
+.btn {
+  background-color: #333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 30px;
+
+  &-more {
+    background: #222;
+    border: none;
+    font-size: 20px;
+    padding: 15px;
+    color: #fff;
+    width: 100%;
   }
 }
