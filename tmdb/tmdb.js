@@ -17,8 +17,8 @@ myFetch
         <div class="movie-list-txt">
           <h2>${item.title}</h2>
           <p>${item.original_title}</p>
-          <p>${item.release_date}<p>
-          <p>${item.overview}<p>
+          <p>${item.release_date}</p>
+          <p>${item.overview}</p>
         </div>
       </li>`;
     });
