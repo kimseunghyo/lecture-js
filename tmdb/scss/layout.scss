@@ -47,18 +47,17 @@ header {
 }
 
 .btn {
-  background-color: #333;
+  background-color: #222;
   display: flex;
   justify-content: center;
   align-items: center;
   margin-bottom: 30px;
 
   &-more {
-    background: #222;
+    background: none;
     border: none;
     font-size: 20px;
     padding: 15px;
     color: #fff;
-    width: 100%;
   }
 }
