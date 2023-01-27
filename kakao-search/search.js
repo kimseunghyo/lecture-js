@@ -11,12 +11,24 @@ recentSearchWordArray.forEach(function (item, idx) {
   recentSearchWord.innerHTML += `<li>${item}</li>`;
 });
 
+// const recentSearchWordItem = document.querySelectorAll("li");
+// recentSearchWordItem.forEach(function (item, idx) {
+//   item.addEventListener("click", function () {
+//     const txt = item.textContent;
+//     searchImg(txt);
+//   });
+// });
+
+// 이벤트 위임
+recentSearchWord.addEventListener("click", function (e) {
+  const txt = e.target.textContent;
+  searchImg(txt);
+});
+
 searchTxt.addEventListener("keyup", function (e) {
   const txt = searchTxt.value;
 
   if (e.keyCode === 13) {
-    searchImg(txt);
-
     if (!recentSearchWordArray.includes(txt)) {
       recentSearchWordArray.push(txt);
       recentSearchWord.innerHTML += `<li>${txt}</li>`;
@@ -26,6 +38,7 @@ searchTxt.addEventListener("keyup", function (e) {
         JSON.stringify(recentSearchWordArray)
       );
     }
+    searchImg(txt);
   }
 });
 
@@ -45,8 +58,12 @@ function searchImg(searchTxt) {
     })
     .then(function (result) {
       result.documents.forEach(function (item, idx) {
-        console.log(item.thumbnail_url);
+        //console.log(item.thumbnail_url);
         thumbList.innerHTML += `<li><a href="${item.image_url}" data-fancybox="gallery"><img src="${item.thumbnail_url}"></a></li>`;
+      });
+      gsap.from(".list li", {
+        scale: 0,
+        stagger: { each: 0.02, grid: "auto", from: "edge" },
       });
     })
     .catch(function (error) {

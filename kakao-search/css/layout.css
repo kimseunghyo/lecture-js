@@ -81,4 +81,5 @@ header h1 strong {
   color: #fff;
   border-radius: 100px;
   font-weight: 700;
+  cursor: pointer;
 }
