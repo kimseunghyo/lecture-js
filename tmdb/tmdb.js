@@ -16,7 +16,6 @@ function loadMovie(pageNum) {
       return response.json();
     })
     .then(function (result) {
-      movieList.innerHTML = "";
       makeList(result);
     })
     .catch();
