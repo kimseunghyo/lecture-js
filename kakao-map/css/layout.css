@@ -64,19 +64,41 @@ header h1 strong {
   aspect-ratio: 2/1;
   margin: 100px auto;
   background-color: #111;
+  color: #111;
 }
-
-.customoverlay {
-  background-color: rgb(52, 121, 201);
-  padding: 10px 15px;
-  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.15);
-  border-radius: 5px;
+#map .contents-box {
+  padding: 15px;
+  font-size: 14px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -150%);
+}
+#map .contents-box:after {
+  content: "";
+  display: block;
+  border: 10px solid transparent;
+  border-top-color: #fff;
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  bottom: 80px;
+  bottom: -20px;
 }
-.customoverlay a {
-  text-decoration: none;
-  color: #fff;
+#map .contents-box div {
+  margin: 5px 0;
+}
+#map .contents-box .close {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  border: none;
+  background-color: #fff;
+  cursor: pointer;
+}
+#map .contents-box .title {
+  font-size: 16px;
+  font-weight: 700;
 }
