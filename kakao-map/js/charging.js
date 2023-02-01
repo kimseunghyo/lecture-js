@@ -1,9 +1,7 @@
-const myFetch = fetch(
-  "https://api.odcloud.kr/api/EvInfoServiceV2/v1/getEvSearchList?serviceKey=UHvOGc0JhYQnrF%2Bx7qrklC5AYkaWLzl6OP8YMOaqGfa22ApZ4DndiBo5pai%2BuNOtIjPVAZegBWv1hri6ZkvIuQ%3D%3D&perPage=300"
-);
+const searchTxt = document.querySelector(".search-txt");
 const container = document.querySelector("#map");
 const mapOption = {
-  center: new kakao.maps.LatLng(36, 128),
+  center: new kakao.maps.LatLng(37.66826, 126.9786557),
   level: 13,
 };
 const map = new kakao.maps.Map(container, mapOption);
@@ -13,61 +11,51 @@ const clusterer = new kakao.maps.MarkerClusterer({
   minLevel: 10,
   disableClickZoom: true,
 });
-let customOverlay = null;
+const customOverlay = new kakao.maps.CustomOverlay({
+  map: map,
+  zIndex: 99,
+});
 
-function searchCharging(result) {
-  const markers = [];
-  customOverlay = new kakao.maps.CustomOverlay({
-    map: map,
-  });
-
-  result.forEach(function (item, idx) {
-    const marker = new kakao.maps.Marker({
-      map: map,
-      position: new kakao.maps.LatLng(item.lat, item.longi),
-    });
-    markers.push(marker);
-
-    kakao.maps.event.addListener(marker, "click", function () {
-      customOverlay.setContent(`
-      <div class="contents-box">
-      <div class="title">${item.csNm}</div>
-      <div style="font-size: 12px">${item.cpNm}, ${chargerType(item.cpTp)}</div>
-      <div>${item.addr}</div>
-      <button class="close" onClick="close()"><span class="material-icons">close</span></button>
-      </div>`);
-      customOverlay.setMap(map);
-      customOverlay.setPosition(marker.getPosition());
-    });
-  });
-  clusterer.addMarkers(markers);
-}
-
-function loadCharging() {
-  myFetch
+function loadMap(address) {
+  fetch(
+    `https://api.odcloud.kr/api/EvInfoServiceV2/v1/getEvSearchList?serviceKey=UHvOGc0JhYQnrF%2Bx7qrklC5AYkaWLzl6OP8YMOaqGfa22ApZ4DndiBo5pai%2BuNOtIjPVAZegBWv1hri6ZkvIuQ%3D%3D&perPage=5000&cond[addr::LIKE]=${address}`
+  )
     .then(function (response) {
       return response.json();
     })
     .then(function (result) {
-      searchCharging(result.data);
+      const charList = result.data;
+      const markers = [];
+
+      charList.forEach(function (item, idx) {
+        const marker = new kakao.maps.Marker({
+          map: map,
+          position: new kakao.maps.LatLng(item.lat, item.longi),
+        });
+        markers.push(marker);
+        kakao.maps.event.addListener(marker, "click", function () {
+          map.panTo(marker.getPosition());
+          customOverlay.setMap(map);
+          customOverlay.setPosition(marker.getPosition());
+          customOverlay.setContent(`
+          <div class="contents-box">
+          <h2 class="title">${item.csNm}</h2>
+          <p class="addr">${item.addr}</p>
+          <p class="type">${item.cpNm}</p>
+          <button class="close"><span class="material-icons">close</span></button>
+        </div>`);
+        });
+      });
+      clusterer.addMarkers(markers);
     })
     .catch();
 }
 
-function chargerType(cpTp) {
-  if (cpTp === "1") return "B타입(5핀)";
-  else if (cpTp === "2") return "C타입(5핀)";
-  else if (cpTp === "3") return "BC타입(5핀)";
-  else if (cpTp === "4") return "BC타입(7핀)";
-  else if (cpTp === "5") return "DC차 데모";
-  else if (cpTp === "6") return "AC 3상";
-  else if (cpTp === "7") return "DC콤보";
-  else if (cpTp === "8") return "DC차데모+DC콤보";
-  else if (cpTp === "9") return "DC차데모+AC3상";
-  else if (cpTp === "10") return "DC차데모+DC콤보, AC3상";
-}
-
-loadCharging();
+searchTxt.addEventListener("keyup", function (e) {
+  if (e.keyCode === 13) {
+    loadMap(searchTxt.value);
+  }
+});
 
 container.addEventListener("click", function (e) {
   if (e.target.closest("button")) {
