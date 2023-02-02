@@ -1,35 +1,42 @@
-const candidateNum = [];
-const lotto = [];
+// const candidate = Array(45)
+//   .fill(0)
+//   .map((item, idx) => idx + 1);
+const candidate = Array(45)
+  .fill(0)
+  .map(function (item, idx) {
+    return idx + 1;
+  });
 
-for (let i = 1; i < 46; i++) {
-  candidateNum.push(i);
-}
+const colors = ["yellow", "blue", "red", "gray", "green"];
+const paper = document.querySelector(".paper");
 
-for (let i = 0; i < 6; i++) {
-  const selectedNum = candidateNum.splice(
-    parseInt(Math.random() * candidateNum.length),
-    1
-  );
+function MakeLotto(num) {
+  paper.innerHTML = "";
+  for (let i = 0; i < num; i++) {
+    const lotto = _.shuffle(candidate).filter(function (item, idx) {
+      if (idx < 6) {
+        return item;
+      }
+    });
+    const myLotto = _.sortBy(lotto);
+    const html = myLotto.reduce(function (acc, item, idx) {
+      const selectColor = Math.ceil(item / 10) - 1;
 
-  lotto.push(selectedNum[0]);
-}
+      if (idx < myLotto.length - 1) {
+        console.log(colors[selectColor]);
+        return (acc += `<li class="${colors[selectColor]}">${item}</li>`);
+      } else {
+        return (acc += `<li class="${colors[selectColor]}">${item}</li></ul>`);
+      }
+    }, "<ul>");
 
-lotto.sort(function (a, b) {
-  return a - b;
-  /*
-  if (a > b) {
-    return 1;
-  } else if (a < b) {
-    return -1;
-  } else {
-    return 0;
+    paper.innerHTML += html;
   }
-  */
+}
+
+const radios = document.querySelectorAll(".btns input");
+radios.forEach(function (item, idx) {
+  item.addEventListener("change", function () {
+    MakeLotto(idx + 1);
+  });
 });
-
-console.log(lotto);
-
-//Math.random() * 45; // 0+1 < Math.random() * 45+1 < 45+1
-// Math.floor(Math.random() * 45);
-// Math.ceil(Math.random() * 45);
-// Math.ceil(Math.round() * 45);
