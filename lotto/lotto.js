@@ -1,35 +1,23 @@
-const candidateNum = [];
-const lotto = [];
+const candidate = Array(45)
+  .fill(0)
+  .map(function (item, idx) {
+    return idx + 1;
+  });
 
-for (let i = 1; i < 46; i++) {
-  candidateNum.push(i);
+// const candidate = Array(45)
+//   .fill(0)
+//   .map((item, idx) => idx + 1);
+
+for (let i = 0; i < 46; i++) {
+  const first = parseInt(Math.random() * 45); // 0~45
+  const second = parseInt(Math.random() * 45);
+  const num = candidate[first];
+  candidate[first] = candidate[second];
+  candidate[second] = num;
 }
 
-for (let i = 0; i < 6; i++) {
-  const selectedNum = candidateNum.splice(
-    parseInt(Math.random() * candidateNum.length),
-    1
-  );
-
-  lotto.push(selectedNum[0]);
-}
-
-lotto.sort(function (a, b) {
-  return a - b;
-  /*
-  if (a > b) {
-    return 1;
-  } else if (a < b) {
-    return -1;
-  } else {
-    return 0;
+const myLotto = _.shuffle(candidate).filter(function (item, idx) {
+  if (idx < 6) {
+    return item;
   }
-  */
 });
-
-console.log(lotto);
-
-//Math.random() * 45; // 0+1 < Math.random() * 45+1 < 45+1
-// Math.floor(Math.random() * 45);
-// Math.ceil(Math.random() * 45);
-// Math.ceil(Math.round() * 45);
